@@ -59,20 +59,7 @@ resource "aws_instance" "strapi_instance" {
   }
 
 
-provisioner "remote-exec" {
-    inline = [
-             "sudo apt update - y",
-             "curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh",
-             "sudo bash -E nodesource_setup.sh",
-             "sudo apt update && sudo apt install nodejs -y",
-             "sudo npm install -g yarn && sudo npm install -g pm2",
-              "sudo mkdir -p /srv/strapi",
-              "sudo chown ubuntu:ubuntu /srv/strapi",
-              "echo -e 'skip\n' | npx create-strapi-app simple-strapi --quickstart",                      
-            
-    ]
-  }
- 
+
  # security_groups = [aws_security_group.strapi-sg.name]
 }
 
