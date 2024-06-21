@@ -22,7 +22,14 @@ jobs:
           chmod 600 key.pem
       - name: Deploy Strapi Application
         run: |
-          cd simple-strapi
-          echo "const strapi = require('@strapi/strapi');
-          strapi().start();" > server.js
-          pm2 start server.js
+          # Install Strapi globally
+          sudo npm install strapi@beta -g
+
+          # Create a new Strapi project
+          strapi new priya-project --dbclient=sqlite
+
+          # Navigate to the new project directory
+          cd priya-project
+
+          # Start the Strapi application using pm2
+          pm2 start npm --name 'strapi' -- run develop
