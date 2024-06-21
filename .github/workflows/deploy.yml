@@ -25,6 +25,6 @@ jobs:
             cd /srv/strapi
             git pull origin saipavan
             npm install
-            pm2 restart strapi
+            pm2 restart strapi "
 
      
