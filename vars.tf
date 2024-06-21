@@ -8,11 +8,9 @@ variable "aws_region" {
 
 
 
-# Defining AMI
 variable "ami" {
-  default = {
-    us-east-1 = "ami-04b70fa74e45c3917"
+  default = "ami-04b70fa74e45c3917"
   }
-}
+
 
 
