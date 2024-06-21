@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main  # Trigger this workflow on push to the main branch
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -21,7 +20,7 @@ jobs:
         run: |
           echo "${{ secrets.HARIPRIYA_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
-          ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$SAIPAVAN_EC2_HOST "
+          ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST "
             cd /srv/strapi
             git pull origin main
             npm install
