@@ -20,10 +20,19 @@ jobs:
         run: |
           echo "${{ secrets.HARIPRIYA_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
-          ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST "
+      - name: Deploy Strapi Application
+        run: |
+          ssh -o StrictHostKeyChecking=no -i strapi-keypair $EC2_USER@$EC2_HOST "
+            sudo mkdir -p /srv/strapi && sudo chown ubuntu:ubuntu /srv/strapi
             cd /srv/strapi
-            git pull origin main
+            if [ -d '.git' ]; then
+              git pull origin main
+            else
+              https://github.com/haripriya2413/Terraform.git /srv/strapi
+            fi
             npm install
-            pm2 restart strapi "
-
-     
+            npm run build
+            pm2 restart strapi || pm2 start npm --name 'strapi' -- run start
+          "
+      - name: Clean up
+        run: rm key.pem
