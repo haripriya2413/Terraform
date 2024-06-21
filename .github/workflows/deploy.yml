@@ -24,7 +24,7 @@ jobs:
         run: |
           #cd /srv/strapi
           #sudo git pull origin main
-          #sudo npm install  
+          sudo npm install  
           sudo npm install -g pm2
           # Check if Strapi is already managed by pm2
           if ! sudo pm2 status | grep -q "strapi-app"; then
@@ -36,13 +36,13 @@ jobs:
           fi
 
           # Install Strapi globally
-          sudo npm install strapi@beta -g
+         # sudo npm install strapi@beta -g
 
           # Create a new Strapi project
-          strapi new priya-project --dbclient=sqlite
+          #strapi new priya-project --dbclient=sqlite
 
           # Navigate to the new project directory
-          cd priya-project
+          #cd priya-project
 
           # Start the Strapi application using pm2
-          pm2 start npm --name 'strapi' -- run develop
+          #pm2 start npm --name 'strapi' -- run develop
