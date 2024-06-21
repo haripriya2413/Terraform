@@ -60,7 +60,7 @@ provisioner "remote-exec" {
     ]
   }
  
-  #security_groups = [aws_security_group.strapi-sg.name]
+  security_groups = [aws_security_group.strapi-sg.name]
 }
 
 
