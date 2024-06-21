@@ -38,7 +38,7 @@ resource "aws_instance" "strapi_instance" {
   subnet_id = aws_subnet.public_subnet1.id
   associate_public_ip_address = true
   user_data                   = <<-EOF
-               <<-EOF
+               
                                 #!/bin/bash
                                 sudo apt update
                                 curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
