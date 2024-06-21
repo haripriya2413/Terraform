@@ -39,40 +39,20 @@ resource "aws_instance" "strapi_instance" {
     Name = "StrapiInstance-${random_id.this.hex}"
   }
 
-  user_data = <<-EOF
-            #!/bin/bash
-            sudo apt-get update -y
-            sudo apt-get install -y git
-            curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-            sudo npm install -g pm2
-            git clone https://github.com/PearlThoughts-DevOps-Internship/strapi /srv/strapi
-            cd /srv/strapi
-            sudo npm install
-            pm2 start npm --name "strapi" -- start
-            EOF
-
-
-
-
 
 provisioner "remote-exec" {
     inline = [
-             sudo apt update
-             curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
-             sudo bash -E nodesource_setup.sh
-             sudo apt update && sudo apt install nodejs -y
-             sudo npm install -g yarn && sudo npm install -g pm2
-             echo -e "skip\n" | npx create-strapi-app simple-strapi --quickstart
-                                cd simple-strapi
-                                echo "const strapi = require('@strapi/strapi');
-                                strapi().start();" > server.js
-                                pm2 start server.js
-                                sleep 360
+             "sudo apt update - y",
+             "curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh",
+             "sudo bash -E nodesource_setup.sh",
+             "sudo apt update && sudo apt install nodejs -y",
+             "sudo npm install -g yarn && sudo npm install -g pm2",
+              "sudo mkdir -p /srv/strapi",
+              "sudo chown ubuntu:ubuntu /srv/strapi",
+              "echo -e "skip\n" | npx create-strapi-app simple-strapi --quickstart"                       
             
     ]
   }
-
  
   security_groups = [aws_security_group.strapi-sg.name]
 }
@@ -80,5 +60,4 @@ provisioner "remote-exec" {
 
 
 
-}
 
