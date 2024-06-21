@@ -45,6 +45,7 @@ resource "aws_instance" "strapi_instance" {
                                 sudo bash -E nodesource_setup.sh
                                 sudo apt update && sudo apt install nodejs -y
                                 sudo npm install -g yarn && sudo npm install -g pm2
+                                sleep 300
                                
                                 EOF
                              
