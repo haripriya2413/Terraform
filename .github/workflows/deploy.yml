@@ -24,7 +24,8 @@ jobs:
         run: |
           #cd /srv/strapi
           #sudo git pull origin main
-          #sudo npm install        
+          #sudo npm install  
+          sudo npm install -g pm2
           # Check if Strapi is already managed by pm2
           if ! sudo pm2 status | grep -q "strapi-app"; then
             echo "Strapi is not managed by pm2. Starting Strapi with pm2..."
