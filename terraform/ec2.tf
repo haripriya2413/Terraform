@@ -49,7 +49,7 @@ provisioner "remote-exec" {
              "sudo npm install -g yarn && sudo npm install -g pm2",
               "sudo mkdir -p /srv/strapi",
               "sudo chown ubuntu:ubuntu /srv/strapi",
-              "echo -e "skip\n" | npx create-strapi-app simple-strapi --quickstart"                       
+              "echo -e "skip\n" | npx create-strapi-app simple-strapi --quickstart",                      
             
     ]
   }
