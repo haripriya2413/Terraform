@@ -21,20 +21,10 @@ jobs:
         run: |
           echo "${{ secrets.HARIPRIYA_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
-
-      - name: Deploy Strapi Application
-        run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST "
-            sudo mkdir -p /srv/strapi && sudo chown ubuntu:ubuntu /srv/strapi
+          ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$SAIPAVAN_EC2_HOST "
             cd /srv/strapi
-            if [ -d '.git' ]; then
-              git pull origin main
-            else
-              https://github.com/veera1016/strapi.git /srv/strapi
-            fi
+            git pull origin saipavan
             npm install
-            npm run build
-            pm2 restart strapi || pm2 start npm --name 'strapi' -- run start
-          "
-      - name: Clean up
-        run: rm key.pem
+            pm2 restart strapi
+
+     
