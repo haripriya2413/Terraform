@@ -38,6 +38,7 @@ resource "aws_instance" "strapi_instance" {
   subnet_id = aws_subnet.public_subnet1.id
   associate_public_ip_address = true
   user_data                   = <<-EOF
+                 #!/bin/bash
                sudo apt-get update
                curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
                sudo apt-get install -y nodejs
@@ -48,6 +49,9 @@ resource "aws_instance" "strapi_instance" {
                sudo git clone https://github.com/raviiai/Strapi-project-Deployment 
     
               cd /srv/strapi
+
+
+                             
 
               
              
