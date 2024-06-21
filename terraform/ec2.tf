@@ -1,35 +1,33 @@
 resource "random_id" "this" {
   byte_length = 8
 }
-resource "aws_security_group" "strapi_sg" {
+resource "aws_security_group" "strapi-sg" {
   vpc_id      = aws_vpc.strapi_vpc.id
-  name        = "strapi-security-group-${random_id.this.hex}"
-  description = "Security group for Strapi EC2 instance"
-
+  description = "Security Group for Strapi Application"
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = "22"
+    to_port     = "22"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  ingress {
-    from_port   = 1337
-    to_port     = 1337
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = "0"
+    to_port     = "0"
     protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+
+    from_port   = "1337"
+    to_port     = "1337"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Name = "Strapi Security Group-${random_id.this.hex}"
+    Name = "Strapi-SG"
   }
+
 }
 
 resource "aws_instance" "strapi_instance" {
