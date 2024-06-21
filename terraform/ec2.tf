@@ -1,4 +1,6 @@
-
+resource "random_id" "this" {
+  byte_length = 8
+}
 resource "aws_security_group" "strapi_sg" {
   name        = "strapi-security-group-${random_id.this.hex}"
   description = "Security group for Strapi EC2 instance"
