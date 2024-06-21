@@ -22,17 +22,7 @@ jobs:
           chmod 600 key.pem
       - name: Deploy Strapi Application
         run: |
-          ssh -o StrictHostKeyChecking=no -i strapi-keypair $EC2_USER@$EC2_HOST "
-            sudo mkdir -p /srv/strapi && sudo chown ubuntu:ubuntu /srv/strapi
-            cd /srv/strapi
-            if [ -d '.git' ]; then
-              git pull origin main
-            else
-              https://github.com/haripriya2413/Terraform.git /srv/strapi
-            fi
-            npm install
-            npm run build
-            pm2 restart strapi || pm2 start npm --name 'strapi' -- run start
-          "
-      - name: Clean up
-        run: rm key.pem
+          cd simple-strapi
+          echo "const strapi = require('@strapi/strapi');
+          strapi().start();" > server.js
+          pm2 start server.js
