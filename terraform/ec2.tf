@@ -43,15 +43,14 @@ resource "aws_instance" "strapi_instance" {
                sudo apt-get install -y nodejs
                sudo apt-get install -y npm
                sudo npm install pm2 -g
-               if [ ! -d /srv/strapi ]; then sudo git clone https://github.com/haripriya2413/Strapi-CICD  /srv/strapi; else cd /srv/strapi && sudo git pull origin main; fi",
-
-
-             # sudo npm install -g strapi@latest
-              sudo mkdir -p /srv/strapi 
-              sudo chown ubuntu:ubuntu /srv/strapi
-             # "cd /srv/strapi",
-              #if [ ! -d /srv/strapi ]; then sudo git clone https://github.com/haripriya2413/Strapi-CICD /srv/strapi; else cd /srv/strapi && sudo git pull origin main; fi",
+               sudo mkdir -p /srv/strapi 
+               sudo chown ubuntu:ubuntu /srv/strapi
+               sudo git clone https://github.com/raviiai/Strapi-project-Deployment 
+    
               cd /srv/strapi
+
+              
+             
             
                                 EOF
 
