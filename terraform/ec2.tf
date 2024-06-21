@@ -1,16 +1,3 @@
-resource "random_id" "this" {
-  byte_length = 8
-}
-
-resource "tls_private_key" "strapi_key" {
-  algorithm = "RSA"
-  rsa_bits = 4096
-}
-
-resource "aws_key_pair" "strapi_keypair" {
-  key_name   = "strapi-keypair-${random_id.this.hex}"
-  public_key = tls_private_key.strapi_key.public_key_openssh
-}
 
 resource "aws_security_group" "strapi_sg" {
   name        = "strapi-security-group-${random_id.this.hex}"
@@ -44,8 +31,8 @@ resource "aws_security_group" "strapi_sg" {
 
 resource "aws_instance" "strapi_instance" {
   ami           = var.ami
-  instance_type = "t2.medium"
-  key_name      = aws_key_pair.strapi_keypair.key_name
+  instance_type = "t2.small"
+  key_name      = "devops"
   vpc_security_group_ids = [aws_security_group.strapi_sg.id]
 
   tags = {
@@ -73,7 +60,3 @@ resource "aws_instance" "strapi_instance" {
   }
 }
 
-output "strapi_private_key" {
-  value = tls_private_key.strapi_key.private_key_pem
-  sensitive = true
-}
