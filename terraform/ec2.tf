@@ -2,7 +2,8 @@ resource "random_id" "this" {
   byte_length = 8
 }
 resource "aws_security_group" "strapi_sg" {
-  name        = "strapi-security-group-${random_id.this.hex}"
+  vpc_id      = aws_vpc.strapi_vpc.id
+ # name        = "strapi-security-group-${random_id.this.hex}"
   description = "Security group for Strapi EC2 instance"
 
   ingress {
@@ -35,7 +36,10 @@ resource "aws_instance" "strapi_instance" {
   ami           = var.ami
   instance_type = "t2.small"
   key_name      = "devops"
-  vpc_security_group_ids = [aws_security_group.strapi_sg.id]
+  vpc_security_group_ids      = [aws_security_group.strapi-sg.id]
+  subnet_id = aws_subnet.public_subnet1.id
+  associate_public_ip_address = true
+
 
   tags = {
     Name = "StrapiInstance-${random_id.this.hex}"
@@ -56,7 +60,7 @@ provisioner "remote-exec" {
     ]
   }
  
-  security_groups = [aws_security_group.strapi-sg.name]
+  #security_groups = [aws_security_group.strapi-sg.name]
 }
 
 
