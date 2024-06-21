@@ -18,7 +18,6 @@ jobs:
       - name: Initialize Terraform
         run: terraform init
         working-directory: ./terraform  # Update this path if necessary
-
       - name: Apply Terraform configuration
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.HARIPRIYA_AWS_ACCESS_KEY_ID }}
