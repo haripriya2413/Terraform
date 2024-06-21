@@ -2,7 +2,7 @@ name: Deploy Strapi
 on:
   push:
     branches:
-      - maind  # Trigger this workflow on push to the main branch
+      - main  # Trigger this workflow on push to the main branch
 jobs:
   deploy:
     runs-on: ubuntu-latest
