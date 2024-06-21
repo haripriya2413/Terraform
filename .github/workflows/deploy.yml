@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ASHOK_EC2_USER: ${{ secrets.ASHOK_EC2_USER }}
-      ASHOK_EC2_HOST: ${{ secrets.ASHOK_EC2_HOST }}
-      ASHOK_PRIVATE_KEY: ${{ secrets.ASHOK_PRIVATE_KEY }}
+      ASHOK_EC2_USER: ${{ secrets.HARIPRIYA_EC2_USER }}
+      ASHOK_EC2_HOST: ${{ secrets.HARIPRIYA_EC2_HOST }}
+      ASHOK_PRIVATE_KEY: ${{ secrets.HARIPRIYA_PRIVATE_KEY }}
 
     steps:
       - name: Checkout code
@@ -20,18 +20,18 @@ jobs:
 
       - name: Prepare SSH key
         run: |
-          echo "${{ secrets.ASHOK_PRIVATE_KEY }}" > key.pem
+          echo "${{ secrets.HARIPRIYA_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
 
       - name: Deploy Strapi Application
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem $ASHOK_EC2_USER@$ASHOK_EC2_HOST "
+          ssh -o StrictHostKeyChecking=no -i key.pem $HARIPRIYA_EC2_USER@$HARIPRIYA_EC2_HOST "
             sudo mkdir -p /srv/strapi && sudo chown ubuntu:ubuntu /srv/strapi
             cd /srv/strapi
             if [ -d '.git' ]; then
               git pull origin master
             else
-              https://github.com/veera1016/strapi.git /srv/strapi
+              https://github.com/Strapi-CICD/strapi.git /srv/strapi
             fi
             npm install
             npm run build
