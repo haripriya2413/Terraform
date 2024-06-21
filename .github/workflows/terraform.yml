@@ -2,7 +2,7 @@ name: Terraform_automated
 on:
   push:
     branches:
-    - maind
+    - main
 jobs:
   terraform:
     name: "Terraform"
