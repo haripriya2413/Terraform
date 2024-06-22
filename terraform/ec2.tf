@@ -58,7 +58,7 @@ resource "aws_instance" "strapi_instance" {
               
              
             
-                            
+                      
 
 
 
