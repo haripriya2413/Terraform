@@ -57,7 +57,7 @@ provisioner "remote-exec" {
       host        = self.public_ip
     }
   }
-}
+
 
                              
 
