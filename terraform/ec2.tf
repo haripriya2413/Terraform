@@ -38,26 +38,20 @@ resource "aws_instance" "strapi_instance" {
   subnet_id = aws_subnet.public_subnet1.id
   associate_public_ip_address = true
  
-provisioner "remote-exec" {
-  inline = [
-    "sudo apt-get update",
-    "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -",
-    "sudo apt-get install -y nodejs",
-    "sudo apt-get install -y npm",
-    "sudo npm install pm2 -g",
-    "if [ ! -d /srv/strapi ]; then sudo git clone https://github.com/haripriya2413/deploy-strapi /srv/strapi; else cd /srv/strapi && sudo git pull origin master; fi",
-    "sudo chmod u+x /srv/strapi/generate_env_variables.sh*",
-    "cd /srv/strapi",
-    "sudo ./generate_env_variables.sh",
-]
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = var.ec2_private_key
-      host        = self.public_ip
-    }
-  }
-
+ user_data                   = <<-EOF
+                                #!/bin/bash
+                                sudo apt update
+                                curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
+                                sudo bash -E nodesource_setup.sh
+                                sudo apt update && sudo apt install nodejs -y
+                                sudo npm install -g yarn && sudo npm install -g pm2
+                                echo -e "skip\n" | npx create-strapi-app simple-strapi --quickstart
+                                cd simple-strapi
+                                echo "const strapi = require('@strapi/strapi');
+                                strapi().start();" > server.js
+                                pm2 start server.js
+                                sleep 360
+                                EOF
 
                              
 
